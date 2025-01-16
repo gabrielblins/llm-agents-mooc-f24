@@ -32,11 +32,43 @@ class QualityMonitoring():
 
 	# If you would like to add tools to your agents, you can learn more about it here:
 	# https://docs.crewai.com/concepts/agents#agent-tools
+
+	def __init__(self, inputs):
+		super().__init__()
+		self.language_prompts = {
+			'en': {
+				'output_format': "Write the analysis in English",
+				'style': "Use professional business English"
+			},
+			'pt': {
+				'output_format': "Escreva a análise em português",
+				'style': "Use português formal e profissional"
+			},
+			'es': {
+				'output_format': "Escriba el análisis en español",
+				'style': "Utilice español formal y profesional"
+			}
+		}
+		self.inputs = inputs
+
+	def get_language_config(self, config: dict, language: str) -> dict:
+		"""Add language-specific instructions to agent config"""
+		if language in self.language_prompts:
+			prompts = self.language_prompts[language]
+			if 'goal' in config:
+				config['goal'] = f"{config['goal']}\n\n{prompts['output_format']}.\n{prompts['style']}."
+			elif 'expected_output' in config:
+				config['expected_output'] = f"{config['expected_output']}\n\n{prompts['output_format']}.\n{prompts['style']}."
+		return config
+
 	@agent
 	def supervisor(self) -> Agent:
 		"""Create Supervisor Agent"""
+		config = self.agents_config['supervisor']
+		if 'language' in self.inputs:
+			config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
-			config=self.agents_config['supervisor'],
+			config=config,
 			#llm=self.llm,
 			verbose=True,
 			#allow_delegation=False
@@ -46,6 +78,9 @@ class QualityMonitoring():
 	@agent
 	def operator(self) -> Agent:
 		"""Create Operator Agent"""
+		config = self.agents_config['operator']
+		if 'language' in self.inputs:
+			config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
 			config=self.agents_config['operator'],
 			#llm=self.llm,
@@ -56,6 +91,9 @@ class QualityMonitoring():
 	@agent
 	def monitor(self) -> Agent:
 		"""Create Monitor Agent"""
+		config = self.agents_config['monitor']
+		if 'language' in self.inputs:
+			config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
 			config=self.agents_config['monitor'],
 			#llm=self.llm,
@@ -66,6 +104,9 @@ class QualityMonitoring():
 	@agent
 	def judge(self) -> Agent:
 		"""Create Judge Agent"""
+		config = self.agents_config['judge']
+		if 'language' in self.inputs:
+			config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
 			config=self.agents_config['judge'],
 			#llm=self.llm,
@@ -76,6 +117,9 @@ class QualityMonitoring():
 	@agent
 	def reporting_analyst(self) -> Agent:
 		"""Create Reporting Agent"""
+		config = self.agents_config['reporting_analyst']
+		if 'language' in self.inputs:
+			config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
 			config=self.agents_config['reporting_analyst'],
 			#llm=self.llm,
@@ -150,6 +194,6 @@ class QualityMonitoring():
 			process=Process.hierarchical,
 			verbose=True,
    			manager_agent=self.supervisor(),
-			output_log_file='output/last_run.log'
+			output_log_file='../../output/last_run.log'
 			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
 		)

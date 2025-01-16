@@ -74,15 +74,19 @@ supervisor_task:
     - Highlights both strengths and areas for improvement
     - Offers specific, constructive recommendations
     - Maintains a supportive, development-focused tone
+
+    Your final answer should have a summary of the transcript, the analysis of the guidelines, for example, if the operator followed the guidelines or not and why, the feedback for the operator, and any aditional information that is relevant to the report.
     
     Make sure you passed the guideline and the transcription when necessary, otherwise, workers can NOT do their work with both of them.
   expected_output: >
+    Your final answer should have a summary of the transcript, the analysis of the guidelines, for example, if the operator followed the guidelines or not and why, the feedback for the operator, and any aditional information that is relevant to the report.
     A markdown-formatted feedback report including:
     - Executive summary of the assessment
     - Detailed findings from each stage of the review
     - Specific, actionable improvement recommendations
     - Positive acknowledgments of good performance
     - Clear, professional language
+    - Uses the specified language ONLY FOR FINAL ANSWER: {language}
   agent: supervisor
 
 

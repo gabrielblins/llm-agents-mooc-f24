@@ -65,8 +65,8 @@ class QualityMonitoring():
 	def supervisor(self) -> Agent:
 		"""Create Supervisor Agent"""
 		config = self.agents_config['supervisor']
-		if 'language' in self.inputs:
-			config = self.get_language_config(config, self.inputs['language'])
+		# if 'language' in self.inputs:
+		# 	config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
 			config=config,
 			#llm=self.llm,
@@ -79,8 +79,8 @@ class QualityMonitoring():
 	def operator(self) -> Agent:
 		"""Create Operator Agent"""
 		config = self.agents_config['operator']
-		if 'language' in self.inputs:
-			config = self.get_language_config(config, self.inputs['language'])
+		# if 'language' in self.inputs:
+		# 	config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
 			config=self.agents_config['operator'],
 			#llm=self.llm,
@@ -92,8 +92,8 @@ class QualityMonitoring():
 	def monitor(self) -> Agent:
 		"""Create Monitor Agent"""
 		config = self.agents_config['monitor']
-		if 'language' in self.inputs:
-			config = self.get_language_config(config, self.inputs['language'])
+		# if 'language' in self.inputs:
+		# 	config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
 			config=self.agents_config['monitor'],
 			#llm=self.llm,
@@ -105,8 +105,8 @@ class QualityMonitoring():
 	def judge(self) -> Agent:
 		"""Create Judge Agent"""
 		config = self.agents_config['judge']
-		if 'language' in self.inputs:
-			config = self.get_language_config(config, self.inputs['language'])
+		# if 'language' in self.inputs:
+		# 	config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
 			config=self.agents_config['judge'],
 			#llm=self.llm,
@@ -118,8 +118,8 @@ class QualityMonitoring():
 	def reporting_analyst(self) -> Agent:
 		"""Create Reporting Agent"""
 		config = self.agents_config['reporting_analyst']
-		if 'language' in self.inputs:
-			config = self.get_language_config(config, self.inputs['language'])
+		# if 'language' in self.inputs:
+		# 	config = self.get_language_config(config, self.inputs['language'])
 		return Agent(
 			config=self.agents_config['reporting_analyst'],
 			#llm=self.llm,
@@ -167,9 +167,13 @@ class QualityMonitoring():
 		"""Create Reporting Task"""
 		return Task(
 			config=self.tasks_config['reporting_task'],
-			#agent=self.judge(),
-			#context=[self.monitor_task(), self.operator_task()]
-   			output_file='output/customer_service_feedback_01.md'
+			# agent=self.reporting_analyst(),
+			context=[
+				self.monitor_task(),
+				self.operator_task(),
+				self.judge_task()
+			],
+			output_file='output/customer_service_feedback_01.md'
 		)
 
 	# @task

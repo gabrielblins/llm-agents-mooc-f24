@@ -47,7 +47,7 @@ judge_task:
     Make sure you have the guideline and the transcription. You can NOT do your work with both of them.
   expected_output: >
     A definitive assessment document containing:
-    - Clear determination of the dispute
+    - Clear determination of the dispute, but focused on the guidelines, pointing if the operator followed them or not, theres no middle ground, if the operator achieved at least the minimum of the guideline, tell that he followed the guideline but point the errors and how to improve in the analysis.
     - Detailed reasoning behind the decision
     - Supporting evidence from the transcript
     - Objective rationale for the judgment
@@ -86,15 +86,36 @@ supervisor_task:
     - Specific, actionable improvement recommendations
     - Positive acknowledgments of good performance
     - Clear, professional language
-    - Uses the specified language ONLY FOR FINAL ANSWER: {language}
+    - Use professional business English
   agent: supervisor
 
 
 reporting_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Create a comprehensive quality assessment report using the following inputs:
+    - Monitor's initial assessment
+    - Operator's response
+    - Judge's final decision
+    - Service guidelines and transcript
+
+    Follow this exact structure:
+    1. Call Transcript Summary
+    2. Service Guidelines Analysis (analyze each guideline individually)
+    3. Operator Feedback (strengths, improvements, recommendations)
+    4. Additional Relevant Information
+    5. Conclusion
+
+    Each section must:
+    - Include specific examples from the transcript
+    - Reference the guidelines directly
+    - Maintain professional tone
+    - Provide actionable insights
   expected_output: >
-    A fully fledge reports with the mains topics, each with a full section of information.
-    Formatted as markdown without '```'
+    A markdown-formatted report that includes:
+    - Detailed summary of the call
+    - Analysis of each guideline with compliance status
+    - Comprehensive feedback section with specific examples
+    - Clear recommendations for improvement
+    - Professional conclusion
+    - Use professional business English
   agent: reporting_analyst

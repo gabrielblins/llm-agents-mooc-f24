@@ -1,7 +1,0 @@
-.venv
-.venv/
-.cache/
-__pycache__/
-main_original.py
-runtime-log.txt
-runtime-log*.txt
